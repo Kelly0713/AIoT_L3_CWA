@@ -23,8 +23,8 @@ CWA_API_URL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001"
 API_TIMEOUT_SECONDS = 15
 CACHE_TTL_SECONDS = 3600  # 資料庫資料快取時效：1 小時
 
-# CARTO Basemaps 地圖底圖 API (使用 dark_matter 配合 Cyberpunk 風格)
-CARTO_TILE_URL = "https://basemaps.cartocdn.com/rastertiles/dark_matter/{{z}}/{{x}}/{{y}}.png?key={key}"
+# CARTO Basemaps 地圖底圖 API (使用 dark_all 配合 Cyberpunk 風格)
+CARTO_TILE_URL = "https://basemaps.cartocdn.com/rastertiles/dark_all/{{z}}/{{x}}/{{y}}.png?key={key}"
 CARTO_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
 
 
