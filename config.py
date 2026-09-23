@@ -23,6 +23,10 @@ CWA_API_URL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001"
 API_TIMEOUT_SECONDS = 15
 CACHE_TTL_SECONDS = 3600  # 資料庫資料快取時效：1 小時
 
+# Thunderforest 地圖底圖 API
+THUNDERFOREST_TILE_URL = "https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}"
+THUNDERFOREST_ATTR = '&copy; <a href="https://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+
 
 def get_cwa_api_key() -> str:
     """安全獲取中央氣象署 API 金鑰.
@@ -47,6 +51,30 @@ def get_cwa_api_key() -> str:
 
     # 嘗試從環境變數讀取
     env_key = os.getenv("CWA_API_KEY", "")
+    return env_key.strip() if env_key else ""
+
+
+def get_map_api_key() -> str:
+    """安全獲取 Thunderforest 地圖 API 金鑰.
+
+    優先順序：
+    1. Streamlit Secrets (st.secrets["MAP_API_KEY"])
+    2. 系統環境變數或 .env 檔案 (os.getenv("MAP_API_KEY"))
+
+    Returns:
+        str: 地圖 API Key，若未設定則回傳空字串。
+    """
+    try:
+        import streamlit as st
+
+        if hasattr(st, "secrets") and "MAP_API_KEY" in st.secrets:
+            key = st.secrets["MAP_API_KEY"]
+            if key and key.strip():
+                return key.strip()
+    except Exception:
+        pass
+
+    env_key = os.getenv("MAP_API_KEY", "")
     return env_key.strip() if env_key else ""
 
 

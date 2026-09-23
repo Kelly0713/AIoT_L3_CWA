@@ -9,7 +9,7 @@ from folium import plugins
 from streamlit_folium import st_folium
 import streamlit as st
 
-from config import CITY_COORDINATES
+from config import CITY_COORDINATES, THUNDERFOREST_TILE_URL, THUNDERFOREST_ATTR, get_map_api_key
 from utils.weather_icon import get_weather_icon
 
 
@@ -37,13 +37,27 @@ def render_taiwan_weather_map(summary_records: List[Dict[str, Any]]) -> None:
         st.info("尚無全台概況資料可供繪製地圖。")
         return
 
-    # 建立地圖實例 (中心置於台灣本島，縮放級別 7)
-    tw_map = folium.Map(
-        location=[23.85, 120.95],
-        zoom_start=7,
-        tiles="CartoDB positron",  # 高質感簡約底圖
-        control_scale=True,
-    )
+    # 取得地圖 API Key 並決定底圖來源
+    map_api_key = get_map_api_key()
+
+    if map_api_key:
+        # 使用 Thunderforest Atlas 高品質底圖
+        tile_url = THUNDERFOREST_TILE_URL.replace("{apikey}", map_api_key)
+        tw_map = folium.Map(
+            location=[23.85, 120.95],
+            zoom_start=7,
+            tiles=tile_url,
+            attr=THUNDERFOREST_ATTR,
+            control_scale=True,
+        )
+    else:
+        # 備援：使用免費 CartoDB positron 底圖
+        tw_map = folium.Map(
+            location=[23.85, 120.95],
+            zoom_start=7,
+            tiles="CartoDB positron",
+            control_scale=True,
+        )
 
     # 將 summary 轉為以 region_name 為 key 的字典
     summary_dict = {r["region_name"]: r for r in summary_records}
