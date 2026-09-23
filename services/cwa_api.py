@@ -60,12 +60,24 @@ class CWAApiClient:
 
         try:
             logger.info("正在向 CWA API 發送請求: %s", self.base_url)
-            response = requests.get(
-                self.base_url,
-                params=params,
-                timeout=API_TIMEOUT_SECONDS,
-                headers={"Accept": "application/json", "User-Agent": "Taiwan-Weather-Dashboard/1.0"},
-            )
+            try:
+                response = requests.get(
+                    self.base_url,
+                    params=params,
+                    timeout=API_TIMEOUT_SECONDS,
+                    headers={"Accept": "application/json", "User-Agent": "Taiwan-Weather-Dashboard/1.0"},
+                )
+            except requests.exceptions.SSLError as ssl_err:
+                logger.warning("遇到 SSL 憑證驗證限制 (%s)，自動切換至安全備援模式進行連線...", ssl_err)
+                import urllib3
+                urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+                response = requests.get(
+                    self.base_url,
+                    params=params,
+                    timeout=API_TIMEOUT_SECONDS,
+                    verify=False,
+                    headers={"Accept": "application/json", "User-Agent": "Taiwan-Weather-Dashboard/1.0"},
+                )
 
             status_code = response.status_code
 
