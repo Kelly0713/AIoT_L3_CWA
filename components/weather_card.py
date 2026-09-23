@@ -36,34 +36,49 @@ def render_weather_cards(forecast_data: Dict[str, Any]) -> None:
     card_style = """
     <style>
     .metric-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(240,244,248,0.95) 100%);
-        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 8px;
         padding: 16px 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(220, 226, 235, 0.8);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(255, 0, 255, 0.1);
+        border: 1px solid rgba(0, 255, 255, 0.4);
         text-align: center;
         margin-bottom: 12px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 2px;
+        background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, transparent);
     }
     .metric-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 0 25px rgba(255, 0, 255, 0.4), inset 0 0 15px rgba(0, 255, 255, 0.3);
+        border: 1px solid #ff00ff;
     }
     .metric-title {
         font-size: 0.88rem;
-        color: #64748b;
+        color: #00ffff;
         margin-bottom: 6px;
-        font-weight: 500;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     .metric-value {
         font-size: 1.55rem;
         font-weight: 700;
-        color: #1e293b;
+        color: #ffffff;
+        text-shadow: 0 0 10px #ffffff, 0 0 20px #00ffff;
     }
     .metric-sub {
-        font-size: 0.8rem;
-        color: #94a3b8;
+        font-size: 0.75rem;
+        color: #ff00ff;
         margin-top: 4px;
+        text-shadow: 0 0 5px #ff00ff;
     }
     </style>
     """
@@ -89,7 +104,7 @@ def render_weather_cards(forecast_data: Dict[str, Any]) -> None:
             f"""
             <div class="metric-card">
                 <div class="metric-title">最高氣溫</div>
-                <div class="metric-value" style="color: #e11d48;">🔥 {max_str}</div>
+                <div class="metric-value">🔥 {max_str}</div>
                 <div class="metric-sub">日間預測高溫</div>
             </div>
             """,
@@ -102,7 +117,7 @@ def render_weather_cards(forecast_data: Dict[str, Any]) -> None:
             f"""
             <div class="metric-card">
                 <div class="metric-title">最低氣溫</div>
-                <div class="metric-value" style="color: #0284c7;">❄️ {min_str}</div>
+                <div class="metric-value">❄️ {min_str}</div>
                 <div class="metric-sub">夜間/清晨低溫</div>
             </div>
             """,
@@ -115,7 +130,7 @@ def render_weather_cards(forecast_data: Dict[str, Any]) -> None:
             f"""
             <div class="metric-card">
                 <div class="metric-title">降雨機率</div>
-                <div class="metric-value" style="color: #2563eb;">💧 {pop_str}</div>
+                <div class="metric-value">💧 {pop_str}</div>
                 <div class="metric-sub">PoP 機率</div>
             </div>
             """,
@@ -127,7 +142,7 @@ def render_weather_cards(forecast_data: Dict[str, Any]) -> None:
             f"""
             <div class="metric-card">
                 <div class="metric-title">舒適度</div>
-                <div class="metric-value" style="font-size: 1.25rem; color: #0d9488;">🌿 {comfort}</div>
+                <div class="metric-value" style="font-size: 1.25rem;">🌿 {comfort}</div>
                 <div class="metric-sub">人體感受</div>
             </div>
             """,

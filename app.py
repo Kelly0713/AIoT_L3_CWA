@@ -16,7 +16,7 @@ from components.charts import (
     render_forecast_table,
 )
 from components.map import render_taiwan_weather_map
-
+from components.cyberpunk_css import inject_cyberpunk_styles
 
 # 1. 頁面全域設定
 st.set_page_config(
@@ -25,6 +25,9 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# 注入 Cyberpunk 全域樣式
+inject_cyberpunk_styles()
 
 
 @st.cache_resource
@@ -70,7 +73,6 @@ def main() -> None:
     last_update = service.get_last_updated_time()
     st.sidebar.markdown("---")
     st.sidebar.markdown(f"⏱ **最後更新時間：**\n`{last_update or '尚未同步'}`")
-    st.sidebar.caption("💡 預報資料依據氣象署固定發布時段自動快取儲存於 SQLite。")
 
     # 3. 主畫面 Header
     st.title("🌤 Taiwan Weather Forecast")
@@ -133,8 +135,8 @@ def main() -> None:
     st.markdown("---")
     st.markdown(
         """
-        <div style="text-align: center; color: #64748b; font-size: 0.9rem; padding: 15px 0;">
-            資料來源：<b>中央氣象署 Open Data</b> ｜ 本網站僅供課程專題展示使用
+        <div class="terminal-footer">
+            <span class="typewriter-effect">資料來源：中央氣象署 Open Data ｜ 本網站僅供課程專題展示使用</span>
         </div>
         """,
         unsafe_allow_html=True,

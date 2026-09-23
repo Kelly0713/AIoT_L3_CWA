@@ -32,34 +32,34 @@ def render_temperature_trend_chart(df: pd.DataFrame) -> None:
 
     fig = go.Figure()
 
-    # 最高溫折線 (暖紅)
+    # 最高溫折線 (Neon Red)
     fig.add_trace(
         go.Scatter(
             x=x_labels,
             y=df["max_temp"],
             mode="lines+markers+text",
             name="最高氣溫 (MaxT)",
-            line=dict(color="#ef4444", width=3, shape="spline"),
-            marker=dict(size=9, color="#ef4444"),
+            line=dict(color="#ff003c", width=3, shape="spline"),
+            marker=dict(size=9, color="#ff003c", line=dict(width=2, color="#fff")),
             text=[f"{t}°C" for t in df["max_temp"]],
             textposition="top center",
-            textfont=dict(size=12, color="#b91c1c", family="sans-serif"),
+            textfont=dict(size=12, color="#ff4d79", family="'Share Tech Mono', monospace"),
             hovertemplate="時段: %{x}<br>最高溫: <b>%{y}°C</b><extra></extra>",
         )
     )
 
-    # 最低溫折線 (清爽藍)
+    # 最低溫折線 (Neon Blue)
     fig.add_trace(
         go.Scatter(
             x=x_labels,
             y=df["min_temp"],
             mode="lines+markers+text",
             name="最低氣溫 (MinT)",
-            line=dict(color="#3b82f6", width=3, shape="spline"),
-            marker=dict(size=9, color="#3b82f6"),
+            line=dict(color="#00f0ff", width=3, shape="spline"),
+            marker=dict(size=9, color="#00f0ff", line=dict(width=2, color="#fff")),
             text=[f"{t}°C" for t in df["min_temp"]],
             textposition="bottom center",
-            textfont=dict(size=12, color="#1d4ed8", family="sans-serif"),
+            textfont=dict(size=12, color="#80f8ff", family="'Share Tech Mono', monospace"),
             hovertemplate="時段: %{x}<br>最低溫: <b>%{y}°C</b><extra></extra>",
         )
     )
@@ -69,18 +69,20 @@ def render_temperature_trend_chart(df: pd.DataFrame) -> None:
     y_max = int(df["max_temp"].max() + 4)
 
     fig.update_layout(
-        title=dict(text="未來 36 小時氣溫趨勢 (°C)", font=dict(size=16, color="#334155")),
+        title=dict(text="未來 36 小時氣溫趨勢 (°C)", font=dict(size=16, color="#00ffff", family="'Share Tech Mono', monospace")),
         xaxis=dict(
             title="",
             tickangle=-15,
             showgrid=True,
-            gridcolor="#f1f5f9",
+            gridcolor="#112233",
+            linecolor="#00ffff",
         ),
         yaxis=dict(
             title="溫度 (°C)",
             range=[y_min, y_max],
             showgrid=True,
-            gridcolor="#e2e8f0",
+            gridcolor="#112233",
+            linecolor="#00ffff",
         ),
         legend=dict(
             orientation="h",
@@ -88,10 +90,13 @@ def render_temperature_trend_chart(df: pd.DataFrame) -> None:
             y=1.02,
             xanchor="right",
             x=1,
+            font=dict(color="#00ffff")
         ),
         margin=dict(l=40, r=40, t=60, b=60),
         hovermode="x unified",
-        template="plotly_white",
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
         height=360,
     )
 
@@ -121,30 +126,30 @@ def render_precipitation_bar_chart(df: pd.DataFrame) -> None:
             y=df["precipitation"],
             text=[f"{p}%" for p in df["precipitation"]],
             textposition="auto",
+            textfont=dict(color="#ffffff", family="'Share Tech Mono', monospace"),
             marker=dict(
-                color=df["precipitation"],
-                colorscale=[[0, "#93c5fd"], [0.5, "#3b82f6"], [1, "#1d4ed8"]],
-                cmin=0,
-                cmax=100,
-                showscale=False,
-                line=dict(color="#1e40af", width=1),
+                color="#d900ff",
+                line=dict(color="#ff00ff", width=1),
             ),
             hovertemplate="時段: %{x}<br>降雨機率: <b>%{y}%</b><extra></extra>",
         )
     )
 
     fig.update_layout(
-        title=dict(text="降雨機率預測 (%)", font=dict(size=16, color="#334155")),
-        xaxis=dict(title="", tickangle=-15, showgrid=False),
+        title=dict(text="降雨機率預測 (%)", font=dict(size=16, color="#00ffff", family="'Share Tech Mono', monospace")),
+        xaxis=dict(title="", tickangle=-15, showgrid=False, linecolor="#00ffff"),
         yaxis=dict(
             title="降雨機率 (%)",
             range=[0, 105],
             showgrid=True,
-            gridcolor="#e2e8f0",
+            gridcolor="#112233",
+            linecolor="#00ffff",
             dtick=20,
         ),
         margin=dict(l=40, r=40, t=60, b=60),
-        template="plotly_white",
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
         height=320,
     )
 
