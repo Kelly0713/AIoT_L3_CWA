@@ -6,14 +6,19 @@ def inject_cyberpunk_styles():
     /* Global Fonts & Backgrounds */
     @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Share+Tech+Mono&display=swap');
 
-    html, body, [class*="st-"] {
+    html, body, [class*="st-"]:not(.material-symbols-rounded):not([class*="Icon"]) {
         font-family: 'Share Tech Mono', 'Fira Code', monospace !important;
         background-color: #050510 !important;
         color: #00ffff !important;
     }
 
     /* Fix Material Icons overridden by global font */
-    .stIcon, .material-symbols-rounded, [data-testid="stSidebarCollapseButton"] * {
+    .stIcon, .material-symbols-rounded, 
+    [data-testid="stSidebarCollapseButton"] *, 
+    [data-testid="collapsedControl"] *, 
+    [data-testid="stToolbar"] *,
+    [data-testid="stMainMenu"] *,
+    button[kind="header"] * {
         font-family: "Material Symbols Rounded", "Material Icons", sans-serif !important;
     }
 
