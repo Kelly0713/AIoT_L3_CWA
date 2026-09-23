@@ -12,6 +12,11 @@ def inject_cyberpunk_styles():
         color: #00ffff !important;
     }
 
+    /* Fix Material Icons overridden by global font */
+    .stIcon, .material-symbols-rounded, [data-testid="stSidebarCollapseButton"] * {
+        font-family: "Material Symbols Rounded", "Material Icons", sans-serif !important;
+    }
+
     /* Streamlit Main App */
     .stApp {
         background-color: #050510;
