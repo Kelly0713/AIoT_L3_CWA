@@ -72,13 +72,13 @@ def render_weather_cards(forecast_data: Dict[str, Any]) -> None:
         font-size: 1.55rem;
         font-weight: 700;
         color: #ffffff;
-        text-shadow: 0 0 10px #ffffff, 0 0 20px #00ffff;
+        text-shadow: 0 0 5px #ffffff, 0 0 10px #00ffff;
     }
     .metric-sub {
         font-size: 0.75rem;
         color: #ff00ff;
         margin-top: 4px;
-        text-shadow: 0 0 5px #ff00ff;
+        text-shadow: 0 0 3px #ff00ff;
     }
     </style>
     """

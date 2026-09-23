@@ -22,7 +22,7 @@ def inject_cyberpunk_styles():
     /* Headers */
     h1, h2, h3, h4, h5, h6 {
         color: #00ffff !important;
-        text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
+        text-shadow: 0 0 3px rgba(0, 255, 255, 0.6);
         font-family: 'Share Tech Mono', monospace !important;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -33,20 +33,20 @@ def inject_cyberpunk_styles():
         background-color: #020205 !important;
         border-right: 2px solid #ff00ff;
         box-shadow: inset -5px 0 15px rgba(255, 0, 255, 0.2);
-        background-image: radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 20%);
+        background-image: radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.05) 0%, transparent 20%);
     }
 
     /* Sidebar Title */
     [data-testid="stSidebar"] h1 {
         color: #00ffff !important;
-        text-shadow: 0 0 8px #00ffff, 0 0 15px #00ffff;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
     }
 
     /* Selectbox */
     div[data-baseweb="select"] > div {
         background-color: #050510;
         border: 1px solid #00ffff;
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
         color: #00ffff;
     }
 
@@ -55,8 +55,8 @@ def inject_cyberpunk_styles():
         background: transparent !important;
         border: 2px solid #ff00ff !important;
         color: #ff00ff !important;
-        text-shadow: 0 0 5px #ff00ff;
-        box-shadow: 0 0 10px #ff00ff, inset 0 0 10px #ff00ff;
+        text-shadow: 0 0 3px #ff00ff;
+        box-shadow: 0 0 5px #ff00ff, inset 0 0 5px #ff00ff;
         transition: all 0.2s ease-in-out;
         position: relative;
         overflow: hidden;
@@ -65,16 +65,16 @@ def inject_cyberpunk_styles():
     button[kind="primary"]:hover {
         background: #ff00ff !important;
         color: #000 !important;
-        box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff;
+        box-shadow: 0 0 15px #ff00ff, inset 0 0 15px #ff00ff;
     }
 
     /* Button Glitch Hover Effect */
     @keyframes glitch {
         0% { transform: translate(0) }
-        20% { transform: translate(-2px, 2px) }
-        40% { transform: translate(-2px, -2px) }
-        60% { transform: translate(2px, 2px) }
-        80% { transform: translate(2px, -2px) }
+        20% { transform: translate(-1px, 1px) }
+        40% { transform: translate(-1px, -1px) }
+        60% { transform: translate(1px, 1px) }
+        80% { transform: translate(1px, -1px) }
         100% { transform: translate(0) }
     }
     button[kind="primary"]:hover span {
@@ -86,7 +86,7 @@ def inject_cyberpunk_styles():
         background-color: rgba(0, 255, 0, 0.1);
         border-left: 4px solid #00ff00;
         color: #00ff00;
-        text-shadow: 0 0 5px #00ff00;
+        text-shadow: 0 0 3px #00ff00;
     }
     [data-testid="stAlert"] p {
         color: #00ff00 !important;
@@ -98,7 +98,7 @@ def inject_cyberpunk_styles():
     /* Dataframe / Tables */
     [data-testid="stDataFrame"] {
         border: 1px solid #00ffff;
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
     }
     [data-testid="stDataFrame"] table {
         background-color: transparent !important;
@@ -130,8 +130,8 @@ def inject_cyberpunk_styles():
         color: #ffff00;
         font-family: 'Fira Code', monospace;
         text-align: center;
-        text-shadow: 0 0 5px #ffff00;
-        box-shadow: 0 -5px 15px rgba(255, 255, 0, 0.2);
+        text-shadow: 0 0 3px rgba(255, 255, 0, 0.8);
+        box-shadow: 0 -3px 10px rgba(255, 255, 0, 0.1);
     }
     
     .typewriter-effect {
@@ -153,7 +153,7 @@ def inject_cyberpunk_styles():
         50% { border-color: #ffff00; }
     }
 
-    /* Global Glitch on Load */
+    /* Global Glitch on Load (Reduced opacity to make text clearer) */
     @keyframes scanline {
         0% { transform: translateY(-100%); }
         100% { transform: translateY(100vh); }
@@ -166,7 +166,7 @@ def inject_cyberpunk_styles():
         left: 0;
         bottom: 0;
         right: 0;
-        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
         z-index: 20000;
         background-size: 100% 2px, 3px 100%;
         pointer-events: none;
