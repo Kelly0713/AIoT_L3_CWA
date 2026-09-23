@@ -1,15 +1,15 @@
 """台灣天氣概況互動地圖元件 (Map).
 
 使用 Folium 與 streamlit-folium 呈現全台灣各縣市當前氣溫與天候分佈。
+底圖採用 CARTO Voyager raster tile。
 """
 
 from typing import List, Dict, Any
 import folium
-from folium import plugins
 from streamlit_folium import st_folium
 import streamlit as st
 
-from config import CITY_COORDINATES, THUNDERFOREST_TILE_URL, THUNDERFOREST_ATTR, get_map_api_key
+from config import CITY_COORDINATES, CARTO_TILE_URL, CARTO_ATTR, get_map_api_key
 from utils.weather_icon import get_weather_icon
 
 
@@ -37,27 +37,25 @@ def render_taiwan_weather_map(summary_records: List[Dict[str, Any]]) -> None:
         st.info("尚無全台概況資料可供繪製地圖。")
         return
 
-    # 取得地圖 API Key 並決定底圖來源
-    map_api_key = get_map_api_key()
+    # 建立空白底圖 (不帶預設 tile，由 TileLayer 自行指定)
+    tw_map = folium.Map(
+        location=[23.85, 120.95],
+        zoom_start=7,
+        tiles=None,
+        control_scale=True,
+    )
 
-    if map_api_key:
-        # 使用 Thunderforest Atlas 高品質底圖
-        tile_url = THUNDERFOREST_TILE_URL.replace("{apikey}", map_api_key)
-        tw_map = folium.Map(
-            location=[23.85, 120.95],
-            zoom_start=7,
-            tiles=tile_url,
-            attr=THUNDERFOREST_ATTR,
-            control_scale=True,
-        )
-    else:
-        # 備援：使用免費 CartoDB positron 底圖
-        tw_map = folium.Map(
-            location=[23.85, 120.95],
-            zoom_start=7,
-            tiles="CartoDB positron",
-            control_scale=True,
-        )
+    # 使用 CARTO Voyager raster tile 作為底圖
+    map_api_key = get_map_api_key()
+    tile_url = CARTO_TILE_URL.format(key=map_api_key)
+
+    folium.TileLayer(
+        tiles=tile_url,
+        attr=CARTO_ATTR,
+        name="CARTO Voyager",
+        overlay=False,
+        control=True,
+    ).add_to(tw_map)
 
     # 將 summary 轉為以 region_name 為 key 的字典
     summary_dict = {r["region_name"]: r for r in summary_records}

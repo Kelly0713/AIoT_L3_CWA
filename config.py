@@ -23,9 +23,9 @@ CWA_API_URL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001"
 API_TIMEOUT_SECONDS = 15
 CACHE_TTL_SECONDS = 3600  # 資料庫資料快取時效：1 小時
 
-# Thunderforest 地圖底圖 API
-THUNDERFOREST_TILE_URL = "https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}"
-THUNDERFOREST_ATTR = '&copy; <a href="https://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+# CARTO Basemaps 地圖底圖 API
+CARTO_TILE_URL = "https://basemaps.cartocdn.com/rastertiles/voyager/{{z}}/{{x}}/{{y}}.png?key={key}"
+CARTO_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
 
 
 def get_cwa_api_key() -> str:
@@ -55,7 +55,7 @@ def get_cwa_api_key() -> str:
 
 
 def get_map_api_key() -> str:
-    """安全獲取 Thunderforest 地圖 API 金鑰.
+    """安全獲取 CARTO Basemaps 地圖 API 金鑰.
 
     優先順序：
     1. Streamlit Secrets (st.secrets["MAP_API_KEY"])
