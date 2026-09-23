@@ -130,17 +130,7 @@ def main() -> None:
     render_taiwan_weather_map(all_summary)
 
     # ----------------------------------------------------
-    # Footer
-    # ----------------------------------------------------
-    st.markdown("---")
-    st.markdown(
-        """
-        <div class="terminal-footer">
-            <span class="typewriter-effect">資料來源：中央氣象署 Open Data ｜ 本網站僅供課程專題展示使用</span>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    # (Footer removed)
 
 
 if __name__ == "__main__":
