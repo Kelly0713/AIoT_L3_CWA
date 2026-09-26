@@ -15,6 +15,8 @@ from components.charts import (
     render_precipitation_bar_chart,
     render_forecast_table,
 )
+from components.forecast_cards import render_forecast_cards_36h
+from components.env_indicators import render_env_indicators
 from components.map import render_taiwan_weather_map
 from components.cyberpunk_css import inject_cyberpunk_styles
 
@@ -25,6 +27,22 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# ── 任務 3-1：自動更新 (每 30 分鐘 = 1,800,000 毫秒) ──
+# 使用 streamlit_autorefresh 套件實現非阻塞自動重整
+try:
+    from streamlit_autorefresh import st_autorefresh
+    refresh_count = st_autorefresh(
+        interval=1800000,  # 30 分鐘
+        limit=None,        # 無限次
+        key="weather_auto_refresh",
+    )
+except ImportError:
+    # 若未安裝 streamlit-autorefresh，使用備援 meta-refresh 機制
+    st.markdown(
+        '<meta http-equiv="refresh" content="1800">',
+        unsafe_allow_html=True,
+    )
 
 # 注入 Cyberpunk 全域樣式
 inject_cyberpunk_styles()
@@ -59,20 +77,30 @@ def main() -> None:
         help="請選擇欲查詢之台灣縣市",
     )
 
-    # 手動更新按鈕
+    # ── 任務 3-2：手動即時更新（保留原有按鈕，增強 cache 清除邏輯） ──
     st.sidebar.markdown("### 🔄 資料同步")
     if st.sidebar.button("🔄 更新天氣資料", use_container_width=True, type="primary"):
+        # 清除所有 Streamlit 快取，確保重新發送 API 請求
+        st.cache_data.clear()
+        st.cache_resource.clear()
         with st.spinner("正在向中央氣象署 API 同步最新預報..."):
-            success, msg = service.refresh_weather_data(force=True)
+            # 重新取得 service 實例 (因 cache_resource 已清除)
+            fresh_service = WeatherService()
+            success, msg = fresh_service.refresh_weather_data(force=True)
             if success:
                 st.sidebar.success(msg)
             else:
                 st.sidebar.warning(f"更新注意: {msg}")
+        st.rerun()
 
     # 資料狀態資訊
     last_update = service.get_last_updated_time()
     st.sidebar.markdown("---")
     st.sidebar.markdown(f"⏱ **最後更新時間：**\n`{last_update or '尚未同步'}`")
+
+    # 自動更新狀態提示
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("🔁 **自動更新：** `每 30 分鐘`")
 
     # 3. 主畫面 Header
     st.title("🌤 Taiwan Weather Forecast")
@@ -99,6 +127,14 @@ def main() -> None:
     st.markdown("---")
 
     # ----------------------------------------------------
+    # 新增區：環境指標 (AQI + UVI) — 任務 2
+    # ----------------------------------------------------
+    st.subheader("🌍 環境監測指標")
+    st.caption("空氣品質 (AQI) 與紫外線 (UVI) 即時監測 ── 📌 目前為模擬資料，後續可串接環境部 OpenData")
+    render_env_indicators(selected_region)
+    st.markdown("---")
+
+    # ----------------------------------------------------
     # 第二區 & 第三區：未來 36 小時氣溫趨勢與降雨機率
     # ----------------------------------------------------
     st.subheader("📈 趨勢分析")
@@ -115,10 +151,10 @@ def main() -> None:
     st.markdown("---")
 
     # ----------------------------------------------------
-    # 第四區：未來 36 小時詳細預報 (表格)
+    # 第四區：未來 36 小時詳細預報 (卡片取代表格) — 任務 1
     # ----------------------------------------------------
     st.subheader("📋 未來 36 小時詳細預報")
-    render_forecast_table(forecast_records)
+    render_forecast_cards_36h(forecast_records)
     st.markdown("---")
 
     # ----------------------------------------------------
