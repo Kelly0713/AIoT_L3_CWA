@@ -29,20 +29,16 @@ st.set_page_config(
 )
 
 # ── 任務 3-1：自動更新 (每 30 分鐘 = 1,800,000 毫秒) ──
-# 使用 streamlit_autorefresh 套件實現非阻塞自動重整
-try:
-    from streamlit_autorefresh import st_autorefresh
-    refresh_count = st_autorefresh(
-        interval=1800000,  # 30 分鐘
-        limit=None,        # 無限次
-        key="weather_auto_refresh",
-    )
-except ImportError:
-    # 若未安裝 streamlit-autorefresh，使用備援 meta-refresh 機制
-    st.markdown(
-        '<meta http-equiv="refresh" content="1800">',
-        unsafe_allow_html=True,
-    )
+# 使用純 HTML/JS 實現自動重整，無需額外套件
+st.markdown(
+    """
+    <script>
+        // 每 30 分鐘自動重整頁面
+        setTimeout(function(){ window.location.reload(); }, 1800000);
+    </script>
+    """,
+    unsafe_allow_html=True,
+)
 
 # 注入 Cyberpunk 全域樣式
 inject_cyberpunk_styles()
@@ -79,7 +75,7 @@ def main() -> None:
 
     # ── 任務 3-2：手動即時更新（保留原有按鈕，增強 cache 清除邏輯） ──
     st.sidebar.markdown("### 🔄 資料同步")
-    if st.sidebar.button("🔄 更新天氣資料", use_container_width=True, type="primary"):
+    if st.sidebar.button("🔄 更新天氣資料", width="stretch", type="primary"):
         # 清除所有 Streamlit 快取，確保重新發送 API 請求
         st.cache_data.clear()
         st.cache_resource.clear()

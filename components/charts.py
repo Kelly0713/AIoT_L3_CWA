@@ -100,7 +100,7 @@ def render_temperature_trend_chart(df: pd.DataFrame) -> None:
         height=360,
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def render_precipitation_bar_chart(df: pd.DataFrame) -> None:
@@ -153,7 +153,7 @@ def render_precipitation_bar_chart(df: pd.DataFrame) -> None:
         height=320,
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def render_forecast_table(records: List[Dict[str, Any]]) -> None:
@@ -185,6 +185,6 @@ def render_forecast_table(records: List[Dict[str, Any]]) -> None:
     display_df = pd.DataFrame(table_data)
     st.dataframe(
         display_df,
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
