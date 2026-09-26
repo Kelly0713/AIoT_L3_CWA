@@ -9,7 +9,7 @@
 [![CWA](https://img.shields.io/badge/CWA-Open%20Data-00BFFF?style=for-the-badge)](https://opendata.cwa.gov.tw)
 [![License](https://img.shields.io/badge/License-Educational-8B5CF6?style=for-the-badge)](#)
 
-### 🔗 [▶ 線上展示 Demo](https://aiotl3cwa-yjnoycktwgcb8d9u97agkt.streamlit.app/)
+### 🔗 線上展示 Demo：https://aiotl3cwa-yjnoycktwgcb8d9u97agkt.streamlit.app/
 
 ---
 
