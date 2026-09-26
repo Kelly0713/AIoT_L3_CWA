@@ -9,6 +9,8 @@
 [![CWA](https://img.shields.io/badge/CWA-Open%20Data-00BFFF?style=for-the-badge)](https://opendata.cwa.gov.tw)
 [![License](https://img.shields.io/badge/License-Educational-8B5CF6?style=for-the-badge)](#)
 
+### 🔗 [▶ 線上展示 Demo](https://aiotl3cwa-yjnoycktwgcb8d9u97agkt.streamlit.app/)
+
 ---
 
 **以深色科技美學 (Cyberpunk / Neon) 打造的全功能互動式氣象儀表板。**<br/>
@@ -21,15 +23,15 @@
 
 ## 📸 畫面預覽
 
-> 以下截圖展示儀表板各功能區塊的實際運行畫面。
+> 以下截圖展示儀表板各功能區塊的實際運行畫面。點擊 [**線上 Demo**](https://aiotl3cwa-yjnoycktwgcb8d9u97agkt.streamlit.app/) 即可親自體驗。
 
-| 預報概況 & 環境監測 | 趨勢分析圖表 |
+| 預報概況 & 側邊控制欄 | 環境監測 & 趨勢分析 |
 |:---:|:---:|
-| ![Dashboard Overview](https://github.com/user-attachments/assets/placeholder-overview.png) | ![Trend Charts](https://github.com/user-attachments/assets/placeholder-charts.png) |
+| ![Dashboard Overview](docs/screenshots/01_overview.png) | ![Env & Trends](docs/screenshots/02_env_trends.png) |
 
 | 36 小時三欄式預報卡片 | 台灣各縣市互動地圖 |
 |:---:|:---:|
-| ![Forecast Cards](https://github.com/user-attachments/assets/placeholder-cards.png) | ![Taiwan Map](https://github.com/user-attachments/assets/placeholder-map.png) |
+| ![Forecast Cards](docs/screenshots/03_forecast_cards.png) | ![Taiwan Map](docs/screenshots/04_map.png) |
 
 ---
 
